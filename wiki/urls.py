@@ -18,5 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # i think this only needs editing once (for our simple projects) to add path to appname.urls
     path('', include("encyclopedia.urls"))
 ]
