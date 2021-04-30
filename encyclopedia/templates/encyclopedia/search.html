@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Search results
+{% endblock %}
+
+{% block body %}
+    <h1>Search results</h1>
+    {% if not results %}
+        <div>No Wiki entries match that search.</div>
+        <div>Create a new entry by following the menu link to the left.</div>
+    {% endif %}
+    {% if results %}
+        <div>No Wiki entries directly match that search. Possible results include</div>
+        <div>
+            <ul>
+            {% for result in results %}
+                <li><a href="wiki/{{ result }}">{{ result }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div> Or, create a new entry by following the menu link to the left.</div>
+    {% endif %}
+
+{% endblock %}

@@ -18,6 +18,10 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # i think this only needs editing once (for our simple projects) to add path to appname.urls
+    #? Only needs editing once in simple projects to include appname.urls
+    # There's no route argument in following path because 
+    #* we only have one app, and
+    #* we want that app to run from index
+    # Could have paths that call functions if necessary
     path('', include("encyclopedia.urls"))
 ]
