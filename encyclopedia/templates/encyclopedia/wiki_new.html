@@ -7,6 +7,20 @@
 {% block body %}
     <h1>Create a new Wiki entry</h1>
     <div>
-
+        <form action="{% url 'wiki:wiki_save' %}" method="post">
+            <div class="form-floating mb-3">
+                {% csrf_token %}
+                <input class="form-control" autofocus placeholder="e.g. Network" value="Network" name="title1">
+                <label>Wiki entry title</label>
+                <div class="form-text">Enter a unique descriptive title.</div>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" name="entry1" style="height: 200px"># Network
+A Network is a group of two or more devices connected together using a networking technology.</textarea>
+                <label class="form-label">Wiki entry text</label>
+                <div class="form-text">Please enter your Wiki entry text using <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">the Markdown syntax</a></div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save">
+        </form>
     </div>
 {% endblock %}

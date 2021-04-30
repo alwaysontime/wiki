@@ -1,9 +1,18 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    {{ title }}
+    {{ title1 }}
 {% endblock %}
 
 {% block body %}
-    {{ entry_text|safe }}
+    {{ entry1|safe }}
+    <div></div>
+    <div>
+        <form action="{% url 'wiki:wiki_edit' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="title1" value="{{ title1 }}">
+            <input type="hidden" name="entry1" value="{{ entry1 }}">
+            <input type="submit" class="btn btn-primary" value="Edit this entry">
+        </form>
+    </div>
 {% endblock %}

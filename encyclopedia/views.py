@@ -21,6 +21,7 @@ import re
 #? dict key can be anything and can be called in html
 #? dict value can be a Python variable or function, e.g. a function from util.py
 
+# Index route
 def index(request):
     return render(request, "encyclopedia/index.html", {
         # creates a dict where the key "entries" can be called in html and
@@ -28,21 +29,18 @@ def index(request):
         "entries": util.list_entries()
     })
 
+# Gets a wiki entry
 def wiki(request, title):
     entry = util.get_entry(title)
     if entry:
         formatted_entry = markdown2.markdown(entry)
         return render(request, "encyclopedia/wiki.html", {
-            "title": title, "entry_text": formatted_entry
+            "title1": title, "entry1": formatted_entry
         })
     else:
         return render(request, "encyclopedia/no_entry.html")
-    
-def wiki_edit(request):
-    return render(request, "encyclopedia/wiki_edit.html", {
-        
-    })
-   
+
+# Returns search results
 def search(request):
     title = request.POST.get('q')
     entry = util.get_entry(title)
@@ -63,13 +61,29 @@ def search(request):
         "results": results
     })
 
+# Allows a user to type out a new Wiki entry
+def wiki_new(request):
+    return render(request, "encyclopedia/wiki_new.html")
+
+# Saves a new or edited Wiki entry
+def wiki_save(request):
+    title1 = request.POST.get('title1')
+    entry1 = request.POST.get('entry1')
+    util.save_entry(title1, entry1)
+    return render(request, "encyclopedia/wiki_save.html", {
+        "title1": title1, "entry1": entry1
+    })
+
+# Allows a user to edit a Wiki entry
+def wiki_edit(request):
+    title1 = request.POST.get('title1')
+    entry1 = util.get_entry(title1)
+    return render(request, "encyclopedia/wiki_edit.html", {
+        "title1": title1, "entry1": entry1
+    })
+   
+# Provides a random Wiki entry
 def wiki_random(request):
     return render(request, "encyclopedia/wiki_random.html", {
         
     })
-
-def wiki_new(request):
-    return render(request, "encyclopedia/wiki_new.html", {
-        
-    })
-
