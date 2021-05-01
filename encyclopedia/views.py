@@ -69,19 +69,39 @@ def wiki_new(request):
 def wiki_save(request):
     title1 = request.POST.get('title1')
     entry1 = request.POST.get('entry1')
-    util.save_entry(title1, entry1)
-    return render(request, "encyclopedia/wiki_save.html", {
-        "title1": title1, "entry1": entry1
-    })
+    wiki_action = request.POST.get('wiki_action')
+    entries = util.list_entries()
+    # return HttpResponse(f"{wiki_action} / {entries}")
+    if wiki_action:
+        for i in range(len(entries)):
+            if (title1 in entries[i]) or (title1.capitalize() in entries[i]) or (title1.casefold() in entries[i]):
+                return render(request, "encyclopedia/dup_entry.html", {
+                    "title1": title1, "entry1": entry1
+                    })
+    else:
+        util.save_entry(title1, entry1)
+        return render(request, "encyclopedia/wiki_save.html", {
+            "title1": title1, "entry1": entry1
+        })
+
+# # Saves a new or edited Wiki entry [BACKUP]
+# def wiki_save(request):
+#     title1 = request.POST.get('title1')
+#     entry1 = request.POST.get('entry1')
+#     util.save_entry(title1, entry1)
+#     return render(request, "encyclopedia/wiki_save.html", {
+#         "title1": title1, "entry1": entry1
+#     })
 
 # Allows a user to edit a Wiki entry
 def wiki_edit(request):
     title1 = request.POST.get('title1')
-    entry1 = util.get_entry(title1)
+    entry1 = str(util.get_entry(title1))
+    entry2 = entry1.replace('\r\n', '\n')
     return render(request, "encyclopedia/wiki_edit.html", {
-        "title1": title1, "entry1": entry1
+        "title1": title1, "entry1": entry2
     })
-   
+
 # Provides a random Wiki entry
 def wiki_random(request):
     return render(request, "encyclopedia/wiki_random.html", {

@@ -1,23 +1,23 @@
 {% extends "encyclopedia/layout.html" %}
 
 {% block title %}
-    Edit Wiki Entry
+    Duplicate Entry
 {% endblock %}
 
 {% block body %}
-    <h1>Edit Wiki entry <a href="wiki/{{ title1 }}">{{ title1 }}</a></h1>
+    <h1>A Wiki entry titled <a href="wiki/{{ title1 }}">{{ title1 }}</a> already exists</h1>
     <div>
         <form action="{% url 'wiki:wiki_save' %}" method="post">
             <div class="form-floating mb-3">
                 {% csrf_token %}
                 <input class="form-control" autofocus value="{{ title1 }}" name="title1">
-                <label>Current Wiki entry title:</label>
-                <div class="form-text">You can edit this title and save the edits below.</div>
+                <label>Change your title:</label>
+                <div class="form-text">Consider a different title or edit the existing entry.</div>
             </div>
             <div class="form-floating mb-3">
                 <textarea class="form-control" name="entry1" style="height: 200px">{{ entry1 }}</textarea>
-                <label class="form-label">Current Wiki entry text</label>
-                <div class="form-text">You can edit this entry and save the edits below. Use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">the Markdown syntax</a></div>
+                <label class="form-label">Your Wiki entry text</label>
+                <div class="form-text">Reminder: use <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">the Markdown syntax</a></div>
             </div>
             <input type="submit" class="btn btn-primary" value="Save">
         </form>
