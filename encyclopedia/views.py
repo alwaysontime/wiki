@@ -9,8 +9,11 @@ from . import util
 # converts entries/*.md files to html
 import markdown2
 
-# regular expression module
+# regular expression module [NOT USED]
 import re
+
+# module for picking a random Wiki entry
+import random
 
 # defines functionS that render .html templates from encyclopedia/ 
 #* requires arugment 'request' calls the 'name' from urls.py?
@@ -104,6 +107,10 @@ def wiki_edit(request):
 
 # Provides a random Wiki entry
 def wiki_random(request):
-    return render(request, "encyclopedia/wiki_random.html", {
-        
+    entries = util.list_entries()
+    pick = random.choice(entries)
+    entry = util.get_entry(pick)
+    formatted_entry = markdown2.markdown(entry)
+    return render(request, "encyclopedia/wiki.html", {
+        "title1": pick, "entry1": formatted_entry
     })
