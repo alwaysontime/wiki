@@ -1,2 +1,0 @@
-#Trees
-Trees are tall.
