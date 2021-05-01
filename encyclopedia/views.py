@@ -45,21 +45,22 @@ def wiki(request, title):
 
 # Returns search results
 def search(request):
-    title = request.POST.get('q')
-    entry = util.get_entry(title)
+    title1 = request.POST.get('q')
+    entry = util.get_entry(title1)
     if entry:
-        formatted_entry = markdown2.markdown(entry)
+        entry1 = markdown2.markdown(entry)
+        # return HttpResponse(f"{title} / {entry} / {entry1}")
         return render(request, "encyclopedia/wiki.html", {
-            "title": title, "entry_text": formatted_entry
+            "title1": title1, "entry1": entry1
         })
     else: 
         entries = util.list_entries()
         results = []
         # return HttpResponse(f"{entries} / {len(entries)} / {len(entries[0])}")
         for i in range(len(entries)):
-            if (title in entries[i]) or (title.capitalize() in entries[i]) or (title.casefold() in entries[i]):
+            if (title1 in entries[i]) or (title1.capitalize() in entries[i]) or (title1.casefold() in entries[i]):
                 results.append(entries[i])
-                #return HttpResponse(f"{title} / {entries[i]} / {results}")
+                #return HttpResponse(f"{title1} / {entries1[i]} / {results}")
     return render(request, "encyclopedia/search.html", {
         "results": results
     })
