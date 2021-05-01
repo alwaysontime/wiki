@@ -82,6 +82,11 @@ def wiki_save(request):
                 return render(request, "encyclopedia/dup_entry.html", {
                     "title1": title1, "entry1": entry1
                     })
+            else:
+                util.save_entry(title1, entry1)
+                return render(request, "encyclopedia/wiki_save.html", {
+                    "title1": title1, "entry1": entry1
+                })
     else:
         util.save_entry(title1, entry1)
         return render(request, "encyclopedia/wiki_save.html", {
