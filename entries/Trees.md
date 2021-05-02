@@ -1,2 +1,2 @@
 # Trees
-Trees are green and tall and leafy.
+Trees are tall and leafy.

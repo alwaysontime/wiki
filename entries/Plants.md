@@ -1,2 +1,0 @@
-# Plants
-Plants include trees.
