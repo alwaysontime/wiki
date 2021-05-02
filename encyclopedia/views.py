@@ -73,50 +73,30 @@ def wiki_new(request):
 def wiki_save(request):
     title1 = request.POST.get('title1')
     entry1 = request.POST.get('entry1')
+    # wiki_action is a hidden input in wiki_new.html and wiki_edit.html
     wiki_action = request.POST.get('wiki_action')
-    save_action = request.POST.get('save_action')
     entries = util.list_entries()
-    # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {save_action}")
-    # wiki_action is a hidden input in wiki_new.html that forces a search for a new entry
-    if wiki_action:
-        # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {len(entries)} / {save_action}")
+    if wiki_action == "new":
+        # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {len(entries)}")
         for i in range(len(entries)):
             if (title1 in entries[i]) or (title1.capitalize() in entries[i]) or (title1.casefold() in entries[i]):
                 # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {len(entries)} / {save_action}")
                 return render(request, "encyclopedia/dup_entry.html", {
                     "title1": title1, "entry1": entry1
                     })
-    # # save_action is set in any of wiki_hew.html, wiki_save.html, wiki_edit.html, and dup_entry.html
-    # if save_action and wiki_action:
-    #     formatted_entry = markdown2.markdown(entry1)
-    #     return render(request, "encyclopedia/wiki.html", {
-    #         "title1": title1, "entry1": formatted_entry
-    #     })
-    # else:
-    #     util.save_entry(title1, entry1)
-    #     return render(request, "encyclopedia/wiki_save.html", {
-    #         "title1": title1, "entry1": entry1
-    #     })
-    if not wiki_action:
+        # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {len(entries)}")
         util.save_entry(title1, entry1)
-        # if not save_action:
         formatted_entry = markdown2.markdown(entry1)
         return render(request, "encyclopedia/wiki.html", {
             "title1": title1, "entry1": formatted_entry
         })
-        # else:
-        #     return render(request, "encyclopedia/wiki_save.html", {
-        #         "title1": title1, "entry1": entry1
-        #     })
-
-# # Saves a new or edited Wiki entry [BACKUP]
-# def wiki_save(request):
-#     title1 = request.POST.get('title1')
-#     entry1 = request.POST.get('entry1')
-#     util.save_entry(title1, entry1)
-#     return render(request, "encyclopedia/wiki_save.html", {
-#         "title1": title1, "entry1": entry1
-#     })
+    if wiki_action == "edit":
+        # return HttpResponse(f"{wiki_action} / {title1} / {entries} / {len(entries)}")
+        util.save_entry(title1, entry1)
+        formatted_entry = markdown2.markdown(entry1)
+        return render(request, "encyclopedia/wiki.html", {
+            "title1": title1, "entry1": formatted_entry
+        })
 
 # Allows a user to edit a Wiki entry
 def wiki_edit(request):
